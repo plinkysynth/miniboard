@@ -37,7 +37,7 @@ epsilon = 0.01;
 
 x_offset = (bed_x - 481.55) / 2;
 x_coordinates = [0, 69.72, 137.07, 302.27, 481.55];
-y_coordinates = [20, 96];
+y_coordinates = [8, 8+76];
 
 mb_w = 29.845;
 mb_h = 20.828;
