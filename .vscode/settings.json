@@ -1,5 +1,6 @@
 {
     "cmake.sourceDirectory": "${workspaceFolder}/sw2",
+    "cmake.buildDirectory": "${workspaceFolder}/sw2/build",
     "cmake.showSystemKits": false,
     "cmake.options.statusBarVisibility": "hidden",
     "cmake.options.advanced": {

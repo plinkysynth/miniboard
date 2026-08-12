@@ -4,9 +4,9 @@
 
 #include "tusb.h"
 
-// made u vid/pid
+// made up vid/pid
 #define USB_VID 0xcaff
-#define USB_PID 0x2014
+#define USB_PID 0x2026
 
 enum {
     USB_STRING_LANGUAGE = 0,
