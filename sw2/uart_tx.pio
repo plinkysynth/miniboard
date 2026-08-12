@@ -1,0 +1,38 @@
+; Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+
+.pio_version 0
+
+.program uart_tx
+.side_set 1 opt
+
+; 8n1 serial transmitter. OUT and side-set both drive the TX pin.
+    pull       side 1 [7]  ; stop/idle bit, or stall high when the FIFO is empty
+    set x, 7   side 0 [7]  ; start bit and eight-bit loop counter
+bitloop:
+    out pins, 1
+    jmp x-- bitloop   [6]
+
+% c-sdk {
+#include "hardware/clocks.h"
+#include "hardware/pio.h"
+
+static inline void uart_tx_program_init(PIO pio, uint sm, uint offset,
+                                        uint tx_pin, uint baud) {
+    pio_sm_set_pins_with_mask(pio, sm, 1u << tx_pin, 1u << tx_pin);
+    pio_sm_set_pindirs_with_mask(pio, sm, 1u << tx_pin, 1u << tx_pin);
+    pio_gpio_init(pio, tx_pin);
+
+    pio_sm_config config = uart_tx_program_get_default_config(offset);
+    sm_config_set_out_shift(&config, true, false, 32);
+    sm_config_set_out_pins(&config, tx_pin, 1);
+    sm_config_set_sideset_pins(&config, tx_pin);
+    sm_config_set_fifo_join(&config, PIO_FIFO_JOIN_TX);
+    sm_config_set_clkdiv(&config,
+                         (float)clock_get_hz(clk_sys) / (8.0f * (float)baud));
+
+    pio_sm_init(pio, sm, offset, &config);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}
