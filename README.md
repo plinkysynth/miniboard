@@ -28,7 +28,7 @@ the software just times make/breaks when scanning the keybed, as one must, and u
 
 it also feeds the aftertouch resistor to ADC0 and uses that to generate aftertouch events.
 
-it sends MIDI messages out on channel 0 on the TRS port and over usb midi. I just realised I haven't really tested the USB midi yet, but it's based on old code and it compiles so... yeah it's fine.
+it sends MIDI messages out on channel 0 on the TRS port and over usb midi. 
 
 the pcb has a 3 pin connector for a raspberry pi debug probe 
 
